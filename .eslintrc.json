@@ -1,0 +1,13 @@
+{
+  "extends": "@lightwing",
+  "overrides": [
+    {
+      "files": "src/main/**/*.ts",
+      "rules": {
+        "indent": "off",
+        "@typescript-eslint/consistent-type-imports": "off",
+        "@typescript-eslint/indet": "off"
+      }
+    }
+  ]
+}
