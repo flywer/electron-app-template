@@ -18,7 +18,8 @@
     ],
     "types": [
       "vite/client",
-      "./src/preload"
+      "./src/preload",
+      "unplugin-vue-define-options/macros-global"
     ],
     "paths": {
       "@render/*": [

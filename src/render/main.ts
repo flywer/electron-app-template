@@ -1,4 +1,10 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue';
+import naive from "naive-ui";
 import App from './App.vue'
 
-createApp(App).mount('#app')
+// 通用字体
+import 'vfonts/Lato.css'
+
+createApp(App)
+    .use(naive)
+    .mount('#app')

@@ -1,24 +1,32 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" class="logo">
-  <HelloWorld title="Vite + Electron & Esbuild" />
+  <n-config-provider
+      :locale="zhCN"
+      :date-locale="dateZhCN"
+  >
+    <naive-provider>
+      <WindowBtn/>
+      <HelloWorld title="Electron App Template"/>
+    </naive-provider>
+  </n-config-provider>
 </template>
 
-<style>
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-}
+<script setup lang="ts">
+import {zhCN, dateZhCN} from 'naive-ui';
+import HelloWorld from './components/HelloWorld.vue'
+import NaiveProvider from "@render/components/common/NaiveProvider.vue"
+import WindowBtn from "@render/components/base/WindowBar.vue";
+</script>
+
+<style scoped>
 .logo {
-    width: 400px;
-    border-radius: 1rem;
-    box-shadow: 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  width: 400px;
+  border-radius: 1rem;
+  box-shadow: 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+</style>
+
+<style>
+* {
+  font-family: v-sans v-mono;
 }
 </style>
