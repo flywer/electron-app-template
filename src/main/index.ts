@@ -1,7 +1,8 @@
 import { app } from 'electron'
 import { createEinf } from 'einf'
-import { AppController } from './app.controller'
+import { AppController } from './controller/app.controller'
 import { createWindow } from './main.window'
+import {WindowController} from "@main/controller/window.controller";
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 
@@ -33,7 +34,7 @@ async function bootstrap() {
 
     await createEinf({
       window: createWindow,
-      controllers: [AppController],
+      controllers: [AppController,WindowController],
       injects: [{
         name: 'IS_DEV',
         inject: !app.isPackaged,

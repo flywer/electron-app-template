@@ -9,17 +9,18 @@
         show-trigger
         @collapse="collapsed = true"
         @expand="collapsed = false"
-        style="background-color: #aad9f5"
+        style="background-color: #cdeaf8"
     >
       <n-menu
+          ref="menuInstRef"
+          v-model:value="selectedKey"
           :collapsed="collapsed"
           :collapsed-width="64"
           :collapsed-icon-size="22"
           :options="menuOptions"
-          :expand-icon="expandIcon"
       />
     </n-layout-sider>
-    <n-layout class="padding-top-32" content-style="background-color:rgb(34 103 151)">
+    <n-layout>
       <n-message-provider>
         <router-view/>
       </n-message-provider>
@@ -28,24 +29,15 @@
 </template>
 
 <script setup lang="ts">
-//import {routeName} from "@render/router";
-import {h, ref, Component} from 'vue'
-import {NIcon} from 'naive-ui'
-import type {MenuOption} from 'naive-ui'
-import {CaretDownOutline} from '@vicons/ionicons5'
+import {routeName} from "@render/router";
+import {h, ref} from 'vue'
+import type {MenuOption, MenuInst} from 'naive-ui'
 import {RouterLink} from "vue-router";
-import {
-  LogOutOutline as HomeIcon
-} from '@vicons/ionicons5'
+import {HomeOutlined} from '@vicons/antd'
+import {AccessibleIcon} from '@vicons/fa'
+import {renderIcon} from "@render/utils/common/renderIcon";
 
-import {BareMetalServer} from '@vicons/carbon'
-
-function renderIcon(icon: Component) {
-  return () => h(NIcon, null, {default: () => h(icon)})
-}
-
-// 菜单
-/*
+// 菜单项
 const menuOptions: MenuOption[] = [
   {
     label: () =>
@@ -53,13 +45,13 @@ const menuOptions: MenuOption[] = [
             RouterLink,
             {
               to: {
-                name: routeName.HOST,
+                name: routeName.view1,
               }
             },
-            {default: () => '主机'}
+            {default: () => '首页'}
         ),
-    key: routeName.HOST,
-    icon: renderIcon(BareMetalServer)
+    key: routeName.view1,
+    icon: renderIcon(HomeOutlined)
   },
   {
     label: () =>
@@ -67,22 +59,22 @@ const menuOptions: MenuOption[] = [
             RouterLink,
             {
               to: {
-                name: routeName.TERMINAL,
+                name: routeName.view2,
               }
             },
-            {default: () => '主机'}
+            {default: () => '页面'}
         ),
-    key: routeName.TERMINAL,
-    icon: renderIcon(HomeIcon)
+    key: routeName.view2,
+    icon: renderIcon(AccessibleIcon)
   }
 ]
-*/
 
-const collapsed = ref(true)
-
-const expandIcon = () => {
-  return h(NIcon, null, {default: () => h(CaretDownOutline)})
-}
+// 菜单实例
+const menuInstRef = ref<MenuInst | null>(null)
+// 默认选中的菜单
+const selectedKey = ref(menuOptions[0].key)
+// 菜单是否折叠
+const collapsed = ref(false)
 
 </script>
 

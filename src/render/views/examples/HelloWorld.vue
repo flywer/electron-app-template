@@ -7,7 +7,7 @@ import logo from '@render/assets/logo.png'
 const props = defineProps({
   title: {
     type: String,
-    default: 'Vite + Electron & Esbuild',
+    default: ' Electron App Template',
   },
 })
 
@@ -32,8 +32,7 @@ ipc.on('reply-msg', (msg: string) => {
 </script>
 
 <template>
-  <n-grid x-gap="0" :cols="1" style="text-align: center;
-    margin-top: 60px;">
+  <n-grid x-gap="0" :cols="1" style="text-align: center;margin-top: 60px;">
     <n-gi span="24">
       <img alt="Vue logo" :src="logo" class="logo">
     </n-gi>
@@ -42,14 +41,22 @@ ipc.on('reply-msg', (msg: string) => {
       <h1>{{ title }}</h1>
     </n-gi>
     <n-gi>
-      <textarea v-model="log" cols="60" rows="10" disabled/>
+      <n-input
+          v-model:value="log"
+          readonly
+          type="textarea"
+          placeholder=""
+          size="small"
+          style="text-align: left;width: 500px"
+          :autosize="{ minRows: 3, maxRows: 3 }"
+      />
     </n-gi>
     <n-gi>
       <div style="margin-top: 20px">
-        <input v-model="msg" type="text" placeholder="发送消息给主进程" style="width: 200px">
-        <button style="margin-left: 20px" @click="sendMsg">
+        <n-input v-model="msg" type="text" placeholder="发送消息给主进程" style="width: 200px"/>
+        <n-button style="margin-left: 20px" @click="sendMsg">
           发送
-        </button>
+        </n-button>
       </div>
     </n-gi>
   </n-grid>

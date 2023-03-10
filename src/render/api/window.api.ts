@@ -1,20 +1,24 @@
 import {ipcInstance} from '@render/plugins'
+import {channels} from "@render/api/channels";
 
 
 /**
- * @description: 主窗口设置
- * @author: wangcb
- * @date: 2023/3/3 15:15
- **/
-export const set_window = (setup: any, options: any) => {
-    /*return ipcInstance.send<string>(channel.app.window.setWindow, setup, options);*/
-    console.log(setup)
+ * 窗口最大化
+ */
+export const window_max = () => {
+    return ipcInstance.send<string>(channels.window.max);
 }
 
-interface s {
-
+/**
+ * 窗口最小化
+ */
+export const window_min = () => {
+    return ipcInstance.send<string>(channels.window.min);
 }
 
-export enum Enum {
-    asd = '2',
+/**
+ * 窗口关闭
+ */
+export const window_close = () => {
+    return ipcInstance.send<string>(channels.window.close);
 }

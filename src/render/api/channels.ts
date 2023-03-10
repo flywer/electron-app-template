@@ -1,5 +1,9 @@
 import {reactive} from "vue";
 
 export const channels = reactive({
-    window: {}
+    window: {
+        max: 'window/max',
+        min: "window/min",
+        close: "window/close"
+    }
 })

@@ -1,20 +1,20 @@
-# Electron-Template
+# Electron-App-Template
 
-⚡Vite + Electron Template
+一个 electron + vue + naive-ui 的框架模板
 
-## How to use
+![img.png](https://pic-bed-1307818467.cos.ap-guangzhou.myqcloud.com/img/202303101749721.png)
+
+## 常用命令
 
 ```bash
-# install dependencies
-npm install # yarn
+# 安装依赖（install dependencies）
+npm install 
 
-# run in developer mode
-npm run dev # yarn dev
-
-# build
-npm run build # yarn build
+# 运行 （run in developer mode）
+npm run dev
 
 # fix
+# 若出现报错 "Electron failed to install correctly, please delete node_modules/electron and try installing again"
 # When "Electron failed to install correctly, please delete node_modules/electron and try installing again" error occurs 
 electron-fix start
 ```

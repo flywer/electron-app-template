@@ -1,5 +1,5 @@
 import { Controller, IpcHandle, IpcSend } from 'einf'
-import { AppService } from './app.service'
+import { AppService } from '../app.service'
 
 @Controller()
 export class AppController {

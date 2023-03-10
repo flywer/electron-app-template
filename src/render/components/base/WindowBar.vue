@@ -4,17 +4,17 @@
     <n-layout-content>
       <n-space justify="end" id="btn-group">
         <n-button-group>
-          <n-button size="tiny" :bordered=false class="window-btn" @click="">
+          <n-button size="tiny" :bordered=false class="window-btn" @click="window_min">
             <n-icon style="font-size: large;">
               <MinusOutlined/>
             </n-icon>
           </n-button>
-          <n-button size="tiny" :bordered=false class="window-btn" @click="maxWindowBtn">
+          <n-button size="tiny" :bordered=false class="window-btn" @click="window_max">
             <n-icon style="font-size: large;">
               <BorderOutlined/>
             </n-icon>
           </n-button>
-          <n-button size="tiny" :bordered=false class="window-btn close-btn" @click="">
+          <n-button size="tiny" :bordered=false class="window-btn close-btn" @click="window_close">
             <template #icon>
               <n-icon>
                 <CloseOutlined/>
@@ -29,22 +29,7 @@
 
 <script setup lang="ts">
 import {MinusOutlined, BorderOutlined, CloseOutlined} from "@vicons/antd";
-import {set_window} from "@render/api/window.api";
-import {Enum} from "@main/enum";
-
-const maxWindowBtn = async () => {
-  await set_window(Enum.asd, '2')
-}
-
-/*const minWindowBtn = async () => {
-  await setWindow('window-min')
-}
-
-const closeWindowBtn = async () => {
-  await setWindow('window-close')
-}*/
-
-
+import {window_max,window_min,window_close} from "@render/api/window.api";
 </script>
 
 <style scoped lang="less">
