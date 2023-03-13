@@ -20,7 +20,7 @@
           :options="menuOptions"
       />
     </n-layout-sider>
-    <n-layout>
+    <n-layout class="padding-top-32">
       <n-message-provider>
         <router-view/>
       </n-message-provider>

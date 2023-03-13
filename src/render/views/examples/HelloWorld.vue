@@ -32,7 +32,7 @@ ipc.on('reply-msg', (msg: string) => {
 </script>
 
 <template>
-  <n-grid x-gap="0" :cols="1" style="text-align: center;margin-top: 60px;">
+  <n-grid x-gap="0" :cols="1" style="text-align: center;">
     <n-gi span="24">
       <img alt="Vue logo" :src="logo" class="logo">
     </n-gi>
