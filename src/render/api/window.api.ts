@@ -1,7 +1,6 @@
 import {ipcInstance} from '@render/plugins'
 import {channels} from "@render/api/channels";
 
-
 /**
  * 窗口最大化
  */

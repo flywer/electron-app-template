@@ -4,13 +4,6 @@ import {useIpc} from '@render/plugins/ipc'
 import {ref} from 'vue'
 import logo from '@render/assets/logo.png'
 
-const props = defineProps({
-  title: {
-    type: String,
-    default: ' Electron App Template',
-  },
-})
-
 const log = ref('')
 const msg = ref('')
 

@@ -1,5 +1,5 @@
 <template>
-  <HelloWorld title="Electron App Template"/>
+  <HelloWorld/>
 </template>
 
 <script setup lang="ts">
