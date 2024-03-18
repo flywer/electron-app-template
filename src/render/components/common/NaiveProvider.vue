@@ -1,9 +1,13 @@
 <template>
   <n-loading-bar-provider>
     <n-dialog-provider>
-      <n-notification-provider>
+      <n-notification-provider
+          :placement="'bottom-right'"
+          :container-style="{bottom:'25px'}"
+          :max="3"
+      >
         <n-message-provider>
-          <slot></slot>
+          <slot/>
           <naive-provider-content/>
         </n-message-provider>
       </n-notification-provider>
@@ -35,4 +39,3 @@ const NaiveProviderContent = defineComponent({
   }
 });
 </script>
-<style scoped></style>

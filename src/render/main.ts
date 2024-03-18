@@ -2,12 +2,15 @@ import {createApp} from 'vue';
 import naive from "naive-ui";
 import App from './App.vue'
 import {router} from "@render/router";
-// 通用字体
-import 'vfonts/Lato.css'
+import {createPinia} from 'pinia';
+
 // 全局样式
 import '@render/styles/css/global.css'
+// 全局tailwind样式
+import '@render/styles/css/tailwind.css'
 
 createApp(App)
-    .use(naive)
     .use(router)
+    .use(naive)
+    .use(createPinia())
     .mount('#app')

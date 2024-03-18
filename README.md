@@ -1,8 +1,12 @@
 # Electron-App-Template
 
-一个 electron + vue + naive-ui 的框架模板
+一个 electron + vue3 + naive-ui 的框架模板
 
-![img.png](https://pic-bed-1307818467.cos.ap-guangzhou.myqcloud.com/img/202303101749721.png)
+![image-20240318095609210](https://pic-bed-1307818467.cos.ap-guangzhou.myqcloud.com/img/image-20240318095609210.png)
+
+![image-20240318095624035](https://pic-bed-1307818467.cos.ap-guangzhou.myqcloud.com/img/image-20240318095624035.png)
+
+
 
 ## 常用命令
 

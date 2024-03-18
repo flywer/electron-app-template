@@ -1,11 +1,10 @@
 /// <reference types="vitest" />
-import {join} from 'path'
+import {join} from 'node:path'
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {VitePluginDoubleshot} from 'vite-plugin-doubleshot'
 import DefineOptions from 'unplugin-vue-define-options/vite'
 
-// https://vitejs.dev/config/
 export default defineConfig({
     root: join(__dirname, 'src/render'),
     plugins: [
@@ -51,7 +50,7 @@ export default defineConfig({
     css: {
         preprocessorOptions: {
             less: {
-                javascriptEnabled: true, // 注意，这一句是在less对象中，写在外边不起作用
+                javascriptEnabled: true
             },
         },
     },

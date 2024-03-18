@@ -1,28 +1,45 @@
 <template>
   <n-config-provider
+      class="h-full"
       :locale="zhCN"
       :date-locale="dateZhCN"
+      :theme="theme"
   >
+    <n-global-style/>
     <naive-provider>
-      <WindowBtn/>
-      <MainLayout/>
+      <router-view/>
     </naive-provider>
   </n-config-provider>
 </template>
 
 <script setup lang="ts">
-import {zhCN, dateZhCN} from 'naive-ui';
+import {zhCN, dateZhCN, darkTheme} from 'naive-ui';
+import {useIpc} from "@render/plugins";
 import NaiveProvider from "@render/components/common/NaiveProvider.vue"
-import WindowBtn from "@render/components/base/WindowBar.vue";
-import MainLayout from "@render/components/base/MainLayout.vue";
-</script>
+import {onMounted, ref} from 'vue'
+import {AppSettingsApi} from "@render/api/AppSettingsApi";
+import {AppSettingsConstant} from "@common/constants/AppSettingsConstant";
+import {AppSettingsApiChannel} from "@common/channels/AppSettingsApiChannel";
 
-<style scoped>
+const ipc = useIpc()
 
-</style>
+const theme = ref<null | typeof darkTheme>(null)
 
-<style>
-* {
-  font-family: v-sans v-mono;
+const onThemeModeUpdate = async () => {
+  const themeMode = await AppSettingsApi.getAppSettingByName(AppSettingsConstant.THEME_MODE)
+  if (themeMode === null || themeMode.settingValue === 'light') {
+    theme.value = null
+  } else {
+    theme.value = darkTheme
+  }
 }
-</style>
+
+onMounted(async () => {
+  await onThemeModeUpdate()
+})
+
+ipc.on(AppSettingsApiChannel.THEME_MODE_UPDATED, async () => {
+  await onThemeModeUpdate()
+})
+
+</script>

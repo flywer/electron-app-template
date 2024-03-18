@@ -3,14 +3,16 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
-    "strict": false,
     "jsx": "preserve",
-    "sourceMap": true,
+    "strict": false,
     "resolveJsonModule": true,
+    "sourceMap": true,
     "esModuleInterop": true,
     "noImplicitAny": false,
-    "experimentalDecorators": true, // 使用装饰器
-    "emitDecoratorMetadata": true, // 使用元数据
+    // 使用装饰器
+    "experimentalDecorators": true,
+    // 使用元数据
+    "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "lib": [
       "esnext",

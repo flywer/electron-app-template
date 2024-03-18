@@ -19,7 +19,7 @@ const config = {
                 target: 'nsis', // 设置目标安装包工具
             },
         ],
-        requestedExecutionLevel: 'requireAdministrator',//设置应用权限等级
+        // requestedExecutionLevel: 'requireAdministrator', // 设置应用权限等级
     },
     nsis: {
         oneClick: false, // 是否一键安装
@@ -35,11 +35,11 @@ const config = {
     publish: [
         /*{
             provider: 'github', // 打包上传到github
-            //owner: 'flywer', // 仓库所有者名称
-            //repo: '', // 仓库名称
+            owner: 'flywer', // 仓库所有者名称
+            repo: '', // 仓库名称
             private: false, // 若是私有仓库，则将私有设置为true，同时添加token，反之不需要设置
-            //token: '', // github的私有token
             releaseType: 'release', // 上传到github的版本类型（draft:草稿，prerelease:提前发行版，release:发行版）
+            // token: '', // github的私有token
         },*/
     ],
     npmRebuild: false,
