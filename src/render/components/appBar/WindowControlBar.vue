@@ -1,6 +1,6 @@
 <template>
   <n-flex class="window-btn h-10" :size="0" :wrap="false">
-    <n-button text
+    <n-button text class="common-btn"
               :style="minButtonStyles"
               @mouseenter="onMinButtonMouseEnter"
               @mouseleave="onMinButtonMouseLeave"
@@ -28,11 +28,11 @@
 
 <script setup lang="ts">
 import {LineHorizontal120Filled, Maximize48Regular, Dismiss48Regular} from '@vicons/fluent';
-import {WindowApi} from "@render/api/WindowApi";
+import {WindowApi} from "@render/api/app/WindowApi";
 import {useThemeVars} from "naive-ui";
 import {reactive} from "vue";
-import {AppSettingsApi} from "@render/api/AppSettingsApi";
-import {AppSettingsConstant} from "@common/constants/AppSettingsConstant";
+import {AppSettingsApi} from "@render/api/app/AppSettingsApi";
+import {AppSettingsConstant} from "@common/constants/app/AppSettingsConstant";
 
 const themeVars = useThemeVars().value
 
@@ -82,6 +82,14 @@ const onMaxButtonMouseLeave = () => {
 .window-btn {
   -webkit-app-region: no-drag;
   /*background-color: transparent;*/
+}
+
+.common-btn:hover {
+  color: var(--n-text-clor);
+}
+
+.common-btn:focus {
+  color: var(--n-text-clor);
 }
 
 //关闭窗口按钮 动画特殊

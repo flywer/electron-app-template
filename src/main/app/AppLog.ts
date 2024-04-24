@@ -1,6 +1,6 @@
 import Path from "path";
 import log from 'electron-log/main'
-import {AppConstant} from "@common/constants/AppConstant";
+import {AppConstant} from "@common/constants/app/AppConstant";
 import {DateUtils} from "@common/utils/DateUtils";
 
 // 应用日志管理
@@ -13,6 +13,8 @@ export class AppLog {
      */
     static appLogInit = () => {
         try {
+            log.initialize()
+
             // 根据日期来存日志
             log.transports.file.resolvePathFn = () => this.LOG_PATH
         } catch (e) {

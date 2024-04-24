@@ -1,6 +1,6 @@
 import {ipcInstance} from "@render/plugins";
 import {AppSettings} from "@main/entity/localCache/AppSettings";
-import {AppSettingsApiChannel} from "@common/channels/AppSettingsApiChannel";
+import {AppSettingsApiChannel} from "@common/channels/app/AppSettingsApiChannel";
 
 export class AppSettingsApi {
 

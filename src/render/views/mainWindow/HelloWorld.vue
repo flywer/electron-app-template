@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import {useAppNotificationStore} from "@render/stores/appNotification";
+import {useAppNotificationStore} from "@render/stores/app/appNotification";
 
 const test = () => {
   useAppNotificationStore().addNotification({

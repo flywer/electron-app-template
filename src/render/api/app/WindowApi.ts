@@ -1,5 +1,6 @@
 import {ipcInstance} from '@render/plugins'
-import {WindowApiChannel} from "@common/channels/WindowApiChannel";
+import {WindowApiChannel} from "@common/channels/app/WindowApiChannel";
+import {CreateWindowParams} from "@common/utils/app/WindowUtils";
 
 export class WindowApi {
 
@@ -35,4 +36,10 @@ export class WindowApi {
         return ipcInstance.send(WindowApiChannel.TOP, webContentsId, isOnTop)
     }
 
+    /**
+     * 创建窗口
+     **/
+    static async createWindow(params: CreateWindowParams) {
+        return ipcInstance.send(WindowApiChannel.CREATE_WINDOW, params)
+    }
 }

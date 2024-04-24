@@ -17,9 +17,9 @@ import {zhCN, dateZhCN, darkTheme} from 'naive-ui';
 import {useIpc} from "@render/plugins";
 import NaiveProvider from "@render/components/common/NaiveProvider.vue"
 import {onMounted, ref} from 'vue'
-import {AppSettingsApi} from "@render/api/AppSettingsApi";
-import {AppSettingsConstant} from "@common/constants/AppSettingsConstant";
-import {AppSettingsApiChannel} from "@common/channels/AppSettingsApiChannel";
+import {AppSettingsApi} from "@render/api/app/AppSettingsApi";
+import {AppSettingsConstant} from "@common/constants/app/AppSettingsConstant";
+import {AppSettingsApiChannel} from "@common/channels/app/AppSettingsApiChannel";
 
 const ipc = useIpc()
 

@@ -10,6 +10,8 @@ import {
     IPC_WIN_NAME,
     PARAMTYPES_METADATA, IPC_SEND_ALL
 } from './constants'
+import {WindowManager} from "@main/framework/WindowManager";
+import log from "electron-log";
 
 /**
  * Ipc handle decorator. It will be called by ipcRenderer.invoke
@@ -44,7 +46,8 @@ export function IpcOn(channel: string): MethodDecorator {
  *
  * webContents.send --> @IpcSend
  */
-export function IpcSend(channel: string, windowName: string = DEFAULT_WIN_NAME): MethodDecorator {
+
+/*export function IpcSend(channel: string, windowName: string = DEFAULT_WIN_NAME): MethodDecorator {
     if (!channel)
         throw new Error('ipc send channel is required')
 
@@ -52,6 +55,36 @@ export function IpcSend(channel: string, windowName: string = DEFAULT_WIN_NAME):
         Reflect.defineMetadata(IPC_SEND, channel, target, propertyName)
         Reflect.defineMetadata(IPC_WIN_NAME, windowName, target, propertyName)
     }
+}*/
+
+/**
+ * Ipc send decorator. The return value will be sent by the webContents of the specified window
+ *
+ * webContents.send --> @IpcSend
+ */
+export function IpcSendPlus(channel: string, windowName: string = DEFAULT_WIN_NAME): MethodDecorator {
+    return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
+        const originalMethod = descriptor.value;
+
+        // 覆写原始方法的实现
+        descriptor.value = async function (...args: any[]) {
+            // 首先，调用原始方法，获取结果
+            const result = await originalMethod.apply(this, args);
+
+            // 然后，发送IPC消息到渲染进程
+            const winInfo = WindowManager.getWindows().find(item => item.name === windowName);
+            if (winInfo && winInfo.win && !winInfo.win.isDestroyed()) {
+                winInfo.win.webContents.send(channel, result);
+            } else {
+                log.warn(`Window ${windowName} not found or destroyed; IPC message not sent.`);
+            }
+
+            // 返回原始方法的结果
+            return result;
+        };
+
+        return descriptor;
+    };
 }
 
 /**

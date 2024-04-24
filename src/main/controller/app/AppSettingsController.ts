@@ -1,10 +1,10 @@
 import {Controller, IpcHandle, IpcSendAll} from "@main/framework/decorators";
 import {LocalCacheSource} from "@main/dataSource/LocalCacheSource";
 import {AppSettings} from "@main/entity/localCache/AppSettings";
-import {AppSettingsApiChannel} from "@common/channels/AppSettingsApiChannel";
+import {AppSettingsApiChannel} from "@common/channels/app/AppSettingsApiChannel";
 import {WindowManager} from "@main/framework/WindowManager";
 import {createSettingWindow} from "@main/window/settingWindow";
-import {AppSettingsConstant} from "@common/constants/AppSettingsConstant";
+import {AppSettingsConstant} from "@common/constants/app/AppSettingsConstant";
 import {app} from "electron";
 import {AppTray} from "@main/app/AppTray";
 

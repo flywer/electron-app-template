@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import {ref, watch} from "vue";
-import {AppApi} from "@render/api/AppApi";
+import {AppApi} from "@render/api/app/AppApi";
 
 const props = defineProps({
   label: {

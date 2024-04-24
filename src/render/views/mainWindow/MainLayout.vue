@@ -5,7 +5,7 @@
           id="app-menu"
           class="w-20 pt-2"
           :options="menuOptions"
-          :default-value="routeName.helloWorld"
+          :default-value="RouteName.helloWorld"
       />
       <n-divider class="absolute top-0 -right-2" vertical style="height: 100%"/>
     </div>
@@ -19,9 +19,9 @@
 import type {MenuOption} from 'naive-ui'
 import {h, onMounted} from "vue";
 import {RouterLink, useRouter} from "vue-router";
-import {routeName} from "@render/router";
 import MenuItem from "@render/views/mainWindow/components/MenuItem.vue";
 import {AppsList24Regular, DocumentBulletListMultiple24Regular, CalendarSettings20Regular} from "@vicons/fluent";
+import {RouteName} from "@common/constants/app/RouteName";
 
 const router = useRouter()
 
@@ -32,14 +32,14 @@ const menuOptions: MenuOption[] = [
             RouterLink,
             {
               to: {
-                name: routeName.helloWorld,
+                name: RouteName.helloWorld,
               }
             },
             h(MenuItem, {title: '任务'}, {
               icon: h(AppsList24Regular)
             })
         ),
-    key: routeName.helloWorld,
+    key: RouteName.helloWorld,
   },
   {
     label: () =>
@@ -47,14 +47,14 @@ const menuOptions: MenuOption[] = [
             RouterLink,
             {
               to: {
-                name: routeName.view2,
+                name: RouteName.view2,
               }
             },
-            h(MenuItem, {title: '项目'}, {
+            h(MenuItem, {title: 'view2'}, {
               icon: h(DocumentBulletListMultiple24Regular)
             })
         ),
-    key: routeName.view2,
+    key: RouteName.view2,
   },
   {
     label: () =>
@@ -62,19 +62,19 @@ const menuOptions: MenuOption[] = [
             RouterLink,
             {
               to: {
-                name: routeName.view3,
+                name: RouteName.view3,
               }
             },
-            h(MenuItem, {title: '模板'}, {
+            h(MenuItem, {title: 'view3'}, {
               icon: h(CalendarSettings20Regular)
             })
         ),
-    key: routeName.view3,
+    key: RouteName.view3,
   }
 ]
 
 onMounted(() => {
-  router.push({name: routeName.helloWorld});
+  router.push({name: RouteName.helloWorld});
 })
 
 </script>

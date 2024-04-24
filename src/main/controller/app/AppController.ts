@@ -1,7 +1,7 @@
 import {Controller, IpcHandle} from "@main/framework/decorators"
 import {app, shell} from "electron";
-import {AppApiChannel} from "@common/channels/AppApiChannel";
-import {AppConstant} from "@common/constants/AppConstant";
+import {AppApiChannel} from "@common/channels/app/AppApiChannel";
+import {AppConstant} from "@common/constants/app/AppConstant";
 import log from "electron-log";
 import Path from "path";
 import {FsUtils} from "@common/utils/FsUtils";

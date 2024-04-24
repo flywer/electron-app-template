@@ -8,16 +8,16 @@
   >
     <template #header>
       <n-ellipsis style="max-width: 75%">
-        <span class="text-sm text-nowrap  whitespace-nowrap ">{{ title }}</span>
+        <span class="text-sm text-nowrap  whitespace-nowrap">{{ title }}</span>
       </n-ellipsis>
-      <n-text style="line-height: 20px" class="text-[11px] float-right" depth="3">
+      <n-text style="line-height: 20px" class="text-[11px] float-right select-none" depth="3">
         {{ DateUtils.formatNotificationDate(new Date(releaseTime)) }}
       </n-text>
     </template>
     <template #default>
       <n-flex vertical>
         <n-ellipsis :line-clamp="5" :tooltip="{placement:'bottom'}">
-          <div>{{ content }}</div>
+          <div class="text-xs whitespace-pre-wrap">{{content}}</div>
         </n-ellipsis>
       </n-flex>
     </template>
@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import {PropType} from "vue";
 import {DateUtils} from "@common/utils/DateUtils";
-import {useAppNotificationStore} from "@render/stores/appNotification";
+import {useAppNotificationStore} from "@render/stores/app/appNotification";
 
 const props = defineProps({
   id: {
@@ -40,13 +40,13 @@ const props = defineProps({
   },
   type: {
     type: String as PropType<"default" | "info" | "success" | "warning" | "error">,
-    default: 'info'
+    default: 'default'
   },
   releaseTime: {
     type: Date,
     required: true
   },
-  content: Object
+  content: String
 })
 
 const handleClose = () => {

@@ -1,5 +1,5 @@
 import {ipcInstance} from "@render/plugins";
-import {AppNotificationChannel} from "@common/channels/AppNotificationChannel";
+import {AppNotificationChannel} from "@common/channels/app/AppNotificationChannel";
 import {AppNotification} from "@main/entity/localCache/AppNotification";
 import {InsertResult} from "typeorm";
 
@@ -19,9 +19,17 @@ export class AppNotificationApi {
         return ipcInstance.send(AppNotificationChannel.READ_NOTIFICATION, id)
     }
 
+    static clearNotification(id: number) {
+        return ipcInstance.send(AppNotificationChannel.CLEAR_NOTIFICATION, id)
+    }
+
     /**
      * 全部通知已读
      **/
+    static async clearAllNotifications() {
+        return ipcInstance.send(AppNotificationChannel.CLEAR_ALL_NOTIFICATIONS)
+    }
+
     static async readAllNotifications() {
         return ipcInstance.send(AppNotificationChannel.READ_ALL_NOTIFICATIONS)
     }

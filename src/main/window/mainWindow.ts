@@ -1,8 +1,9 @@
 import {join} from 'path'
 import {BrowserWindow, app} from 'electron'
-import {WindowConstant} from "@common/constants/WindowConstant";
 import log from "electron-log";
 import {DEFAULT_WIN_NAME} from "@main/framework/constants";
+import {BASE_URL} from "@common/constants/app/BaseUrl";
+import {RouteName} from "@common/constants/app/RouteName";
 
 const isDev = !app.isPackaged
 
@@ -10,8 +11,8 @@ export async function createMainWindow() {
     const win = new BrowserWindow({
         width: 1300,
         height: 800,
-        minWidth: 700,
-        minHeight: 400,
+        minWidth: 800,
+        minHeight: 500,
         frame: false, // 无边框
         webPreferences: {
             nodeIntegration: false, // 不允许 Node.js APIs 在渲染进程中使用
@@ -26,7 +27,7 @@ export async function createMainWindow() {
         autoHideMenuBar: !isDev,
     })
 
-    win.loadURL(WindowConstant.MAIN_WINDOW_URL).catch(error => {
+    win.loadURL(BASE_URL + RouteName.mainWindow).catch(error => {
         log.error(error)
     })
 

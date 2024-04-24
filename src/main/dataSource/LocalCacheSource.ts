@@ -1,6 +1,6 @@
 import {DataSource} from "typeorm";
 import {join} from "node:path";
-import {AppConstant} from "@common/constants/AppConstant";
+import {AppConstant} from "@common/constants/app/AppConstant";
 import {AppSettings} from "@main/entity/localCache/AppSettings";
 import {AppNotification} from "@main/entity/localCache/AppNotification";
 

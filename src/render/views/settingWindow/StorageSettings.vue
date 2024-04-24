@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import SettingFolderItem from "@render/views/settingWindow/components/SettingFolderItem.vue";
-import {AppApi} from "@render/api/AppApi";
+import {AppApi} from "@render/api/app/AppApi";
 import {onMounted, ref} from "vue";
 
 const appResourcePath = ref(null)

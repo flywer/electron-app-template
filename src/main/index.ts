@@ -4,13 +4,13 @@ import {createMainWindow} from './window/mainWindow'
 import {WindowController} from "@main/controller/app/WindowController";
 import {WindowManager} from "@main/framework/WindowManager";
 import {AppLog} from "@main/app/AppLog";
-import {AppConstant} from "@common/constants/AppConstant";
+import {AppConstant} from "@common/constants/app/AppConstant";
 import {LocalCacheSource} from "@main/dataSource/LocalCacheSource";
 import log from 'electron-log/main'
 import {AppSettingsController} from "@main/controller/app/AppSettingsController";
 import {ALiYunSource} from "@main/dataSource/ALiYunSource";
 import {AppSettings} from "@main/entity/localCache/AppSettings";
-import {AppSettingsConstant} from "@common/constants/AppSettingsConstant";
+import {AppSettingsConstant} from "@common/constants/app/AppSettingsConstant";
 import {AppTray} from "@main/app/AppTray";
 import {AppNotificationController} from "@main/controller/app/AppNotificationController";
 
@@ -42,9 +42,11 @@ async function electronAppInit() {
 
     }).catch(error => log.error('本地缓存库连接失败', error))
 
-    ALiYunSource.initialize().then(async () => {
-        log.info("远程库连接初始化成功")
-    }).catch(error => log.error('远程库连接失败', error))
+    /*
+        ALiYunSource.initialize().then(async () => {
+            log.info("远程库连接初始化成功")
+        }).catch(error => log.error('远程库连接失败', error))
+    */
 
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin')

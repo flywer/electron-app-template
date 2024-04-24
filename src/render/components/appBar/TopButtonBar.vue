@@ -1,13 +1,7 @@
 <template>
   <n-flex class="window-btn items-center h-10" :size="1" :wrap="false">
-    <!--    <n-button quaternary size="small">
-          <template #icon>
-            <n-icon>
-              <Settings24Regular/>
-            </n-icon>
-          </template>
-        </n-button>-->
     <n-dropdown
+        :size="'small'"
         :options="dropdownOptions"
         placement="bottom-start"
         trigger="click"
@@ -16,33 +10,33 @@
       <n-button quaternary size="small">
         <template #icon>
           <n-icon>
-            <MoreVertical24Regular/>
+            <MoreVertical20Regular/>
           </n-icon>
         </template>
       </n-button>
     </n-dropdown>
-
   </n-flex>
-
 </template>
 
 <script setup lang="ts">
 import {
-  Settings24Regular,
-  Pin24Regular,
-  MoreVertical24Regular,
-  WeatherSunny24Regular,
-  WeatherMoon24Regular,
-  PinOff24Regular
+  Settings20Regular,
+  Pin20Regular,
+  MoreVertical20Regular,
+  WeatherSunny20Regular,
+  WeatherMoon20Regular,
+  PinOff20Regular,
+  Power20Regular
 } from '@vicons/fluent'
 import {onMounted, ref, watch} from "vue";
-import {WindowApi} from "@render/api/WindowApi";
-import {useThemeVars, DropdownOption, darkTheme} from "naive-ui";
+import {WindowApi} from "@render/api/app/WindowApi";
+import {DropdownOption} from "naive-ui";
 import {renderIcon} from "@render/utils/common/renderIcon";
-import {AppSettingsApi} from "@render/api/AppSettingsApi";
-import {AppSettingsConstant} from "@common/constants/AppSettingsConstant";
-import {AppSettingsApiChannel} from "@common/channels/AppSettingsApiChannel";
+import {AppSettingsApi} from "@render/api/app/AppSettingsApi";
+import {AppSettingsConstant} from "@common/constants/app/AppSettingsConstant";
+import {AppSettingsApiChannel} from "@common/channels/app/AppSettingsApiChannel";
 import {useIpc} from "@render/plugins";
+import {AppApi} from "@render/api/app/AppApi";
 
 // region 窗口置顶
 const isWindowTop = ref(false)
@@ -73,25 +67,25 @@ const dropdownOptionsInit = () => {
     {
       label: '浅色模式',
       key: 'toLightMode',
-      icon: renderIcon(WeatherSunny24Regular),
+      icon: renderIcon(WeatherSunny20Regular),
       show: theme.value === 'dark'
     },
     {
       label: '深色模式',
       key: 'toDarkMode',
-      icon: renderIcon(WeatherMoon24Regular),
+      icon: renderIcon(WeatherMoon20Regular),
       show: theme.value === 'light'
     },
     {
       label: '窗口置顶',
       key: 'windowPin',
-      icon: renderIcon(Pin24Regular),
+      icon: renderIcon(Pin20Regular),
       show: !isWindowTop.value
     },
     {
       label: '取消置顶',
       key: 'windowPinOff',
-      icon: renderIcon(PinOff24Regular),
+      icon: renderIcon(PinOff20Regular),
       show: isWindowTop.value
     },
     {
@@ -101,8 +95,17 @@ const dropdownOptionsInit = () => {
     {
       label: '设置',
       key: 'appSettings',
-      icon: renderIcon(Settings24Regular)
-    }
+      icon: renderIcon(Settings20Regular)
+    },
+    {
+      key: 'divider2',
+      type: 'divider'
+    },
+    {
+      label: '重启应用',
+      key: 'reboot',
+      icon: renderIcon(Power20Regular)
+    },
   ]
 }
 
@@ -137,6 +140,9 @@ const onDropdownSelect = (key: string | number, option: DropdownOption) => {
       break
     case 'appSettings':
       AppSettingsApi.createAppSettingWindow()
+      break
+    case 'reboot':
+      AppApi.relaunch()
       break
   }
 

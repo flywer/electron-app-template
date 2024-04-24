@@ -1,7 +1,10 @@
 import {WindowManager} from "@main/framework/WindowManager";
 import {Controller, IpcHandle} from "@main/framework/decorators";
-import {WindowApiChannel} from "@common/channels/WindowApiChannel";
+import {WindowApiChannel} from "@common/channels/app/WindowApiChannel";
 import {BrowserWindow, webContents} from "electron";
+import {CreateWindowParams, WindowUtils} from "@common/utils/app/WindowUtils";
+
+type CreateWindowParamsAlia = CreateWindowParams
 
 @Controller()
 export class WindowController {
@@ -12,16 +15,16 @@ export class WindowController {
      * 获取webContentsID
      **/
     @IpcHandle(WindowApiChannel.GET_WEB_CONTENTS_ID)
-    public getWebContentsId(arg: Electron.IpcMainInvokeEvent) {
-        return arg.sender.id
+    public getWebContentsId(args: Electron.IpcMainInvokeEvent) {
+        return args.sender.id
     }
 
     /**
      * 获取webContents
      **/
     @IpcHandle(WindowApiChannel.GET_WEB_CONTENTS)
-    public getWebContents(arg: Electron.IpcMainInvokeEvent) {
-        return arg.sender
+    public getWebContents(args: Electron.IpcMainInvokeEvent) {
+        return args.sender
     }
 
     /**
@@ -62,5 +65,10 @@ export class WindowController {
     public windowTop(webContentsId: number, isOnTop: boolean) {
         const windowId = BrowserWindow.fromWebContents(webContents.fromId(webContentsId)).id
         WindowManager.getBrowserWindowById(windowId).setAlwaysOnTop(isOnTop)
+    }
+
+    @IpcHandle(WindowApiChannel.CREATE_WINDOW)
+    public async createWindow(params: CreateWindowParamsAlia) {
+        await WindowManager.addWindows(WindowUtils.createWindow(params))
     }
 }

@@ -15,4 +15,6 @@ export class WindowApiChannel {
     static readonly CLOSE = StringUtils.joinPaths(this.channelsPrefix, 'close')
     // 窗口置顶
     static readonly TOP = StringUtils.joinPaths(this.channelsPrefix, 'top')
+    // 创建窗口
+    static readonly CREATE_WINDOW = StringUtils.joinPaths(this.channelsPrefix, 'createWindow')
 }

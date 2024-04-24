@@ -1,8 +1,7 @@
 import {Singleton} from "@main/decorators/Singleton";
-import {app, BrowserWindow, dialog, Menu, MenuItem, nativeImage, Tray} from "electron";
+import {app, BrowserWindow, Menu, MenuItem, nativeImage, Tray} from "electron";
 import path from "path";
-import {AppConstant} from "@common/constants/AppConstant";
-import log from "electron-log";
+import {AppConstant} from "@common/constants/app/AppConstant";
 
 // 应用系统托盘
 @Singleton

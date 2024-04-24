@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
-import {AppApi} from "@render/api/AppApi";
+import {AppApi} from "@render/api/app/AppApi";
 
 const appVersion = ref(null)
 

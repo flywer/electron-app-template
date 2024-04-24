@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import SettingSwitchItem from "@render/views/settingWindow/components/SettingSwitchItem.vue";
-import {AppSettingsConstant} from "@common/constants/AppSettingsConstant";
+import {AppSettingsConstant} from "@common/constants/app/AppSettingsConstant";
 </script>
 
 <style scoped lang="less">

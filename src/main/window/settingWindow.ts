@@ -1,8 +1,9 @@
 import {join} from 'path'
 import {BrowserWindow, app} from 'electron'
-import {WindowConstant} from "@common/constants/WindowConstant";
 import {WindowManager, WindowOpts} from "@main/framework/WindowManager";
 import {DEFAULT_WIN_NAME} from "@main/framework/constants";
+import {BASE_URL} from "@common/constants/app/BaseUrl";
+import {RouteName} from "@common/constants/app/RouteName";
 
 const isDev = !app.isPackaged
 
@@ -32,7 +33,7 @@ export async function createSettingWindow(): Promise<WindowOpts> {
         autoHideMenuBar: !isDev,
     })
 
-    win.loadURL(WindowConstant.SETTING_WINDOW_URL)
+    win.loadURL(BASE_URL + RouteName.settingWindow)
 
     win.once('ready-to-show', async () => {
         win.show() // 当渲染器加载完毕时显示窗口

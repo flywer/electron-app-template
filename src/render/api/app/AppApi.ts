@@ -1,5 +1,5 @@
 import {ipcInstance} from '@render/plugins'
-import {AppApiChannel} from "@common/channels/AppApiChannel";
+import {AppApiChannel} from "@common/channels/app/AppApiChannel";
 
 export class AppApi {
 

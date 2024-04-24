@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import {Dismiss48Regular} from "@vicons/fluent";
-import {WindowApi} from "@render/api/WindowApi";
+import {WindowApi} from "@render/api/app/WindowApi";
 import CommonSettings from "@render/views/settingWindow/CommonSettings.vue";
 import AdvancedSettings from "@render/views/settingWindow/AdvancedSettings.vue";
 import StorageSettings from "@render/views/settingWindow/StorageSettings.vue";

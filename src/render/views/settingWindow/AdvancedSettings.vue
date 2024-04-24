@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {AppSettingsConstant} from "@common/constants/AppSettingsConstant";
+import {AppSettingsConstant} from "@common/constants/app/AppSettingsConstant";
 import SettingSwitchItem from "@render/views/settingWindow/components/SettingSwitchItem.vue";
 </script>
 

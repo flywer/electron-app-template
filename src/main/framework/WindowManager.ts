@@ -220,6 +220,7 @@ export class WindowManager {
                                 return await controller[funcName].apply(controller, [...args, e])
                             } catch (error: any) {
                                 WindowManager.logger.error(error)
+                                WindowManager.logger.error(`With args: ${JSON.stringify(args)}`);
                                 throw new Error(error?.message ?? error)
                             }
                         })
@@ -245,12 +246,14 @@ export class WindowManager {
                     if (!WindowManager.registeredChannels.has(channel)) {
                         const winName = Reflect.getMetadata(IPC_WIN_NAME, proto, funcName)
                         const winInfo = WindowManager.windows.find(item => item.name === winName)
+
                         if (winInfo) {
                             const {webContents} = winInfo.win
                             const func = controller[funcName]
 
                             controller[funcName] = async (...args: any[]) => {
                                 const result = await func.apply(controller, args)
+                                console.log(IPC_SEND, result)
                                 webContents.send(channel!, result)
                                 return result
                             }
@@ -265,10 +268,12 @@ export class WindowManager {
                     const channel = Reflect.getMetadata(IPC_SEND_ALL, proto, funcName)
 
                     const originalFunc = controller[funcName].bind(controller);
+
                     controller[funcName] = async (...args: any[]) => {
                         const result = await originalFunc(...args);
                         WindowManager.windows.forEach(winInfo => {
                             if (winInfo && winInfo.win && !winInfo.win.isDestroyed()) {
+                                console.log(IPC_SEND_ALL, result)
                                 winInfo.win.webContents.send(channel, result);
                             }
                         });

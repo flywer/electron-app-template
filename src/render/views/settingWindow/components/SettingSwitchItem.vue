@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import {onMounted, ref, watch} from "vue";
-import {AppSettingsApi} from "@render/api/AppSettingsApi";
+import {AppSettingsApi} from "@render/api/app/AppSettingsApi";
 
 const props = defineProps({
   settingLabel: {
