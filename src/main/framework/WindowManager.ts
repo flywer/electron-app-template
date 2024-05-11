@@ -107,6 +107,7 @@ export class WindowManager {
                         })
                     } else {
                         win1?.win.close()
+                        WindowManager.getBrowserWindowByName(win1.name)?.focus()
                     }
                 } else {
                     if (!existWinName.includes(win.name)) {
@@ -116,6 +117,7 @@ export class WindowManager {
                         })
                     } else {
                         win?.win.close()
+                        WindowManager.getBrowserWindowByName(win.name)?.focus()
                     }
                 }
             }
@@ -136,6 +138,7 @@ export class WindowManager {
                         windows = [result];
                     } else {
                         result?.win.close()
+                        WindowManager.getBrowserWindowByName(result.name)?.focus()
                     }
                 }
             } else if (window instanceof BrowserWindow) {
@@ -147,6 +150,7 @@ export class WindowManager {
                     windows = [window];
                 } else {
                     window?.win.close()
+                    WindowManager.getBrowserWindowByName(window.name)?.focus()
                 }
             }
 
