@@ -52,8 +52,8 @@ export class AppSettingsController {
                     if (setting.settingValue == 'true') {
                         AppTray.trayInit()
                     } else {
-                        if (!AppTray.tray.isDestroyed()) {
-                            AppTray.tray.destroy()
+                        if (!AppTray.tray?.isDestroyed()) {
+                            AppTray.tray?.destroy()
                         }
                     }
                     break

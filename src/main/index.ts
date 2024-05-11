@@ -54,8 +54,8 @@ async function electronAppInit() {
     })
 
     app.on('quit', () => {
-        if (!AppTray.tray.isDestroyed()) {
-            AppTray.tray.destroy()
+        if (!AppTray.tray?.isDestroyed()) {
+            AppTray.tray?.destroy()
         }
     })
 

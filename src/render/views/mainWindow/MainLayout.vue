@@ -9,7 +9,7 @@
       />
       <n-divider class="absolute top-0 -right-2" vertical style="height: 100%"/>
     </div>
-    <div class="fixed top-10 bottom-6 left-24 right-0">
+    <div class="fixed top-10 bottom-6 left-20 right-0">
       <router-view/>
     </div>
   </div>
