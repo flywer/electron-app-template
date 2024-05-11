@@ -8,7 +8,6 @@ import {AppConstant} from "@common/constants/app/AppConstant";
 import {LocalCacheSource} from "@main/dataSource/LocalCacheSource";
 import log from 'electron-log/main'
 import {AppSettingsController} from "@main/controller/app/AppSettingsController";
-import {ALiYunSource} from "@main/dataSource/ALiYunSource";
 import {AppSettings} from "@main/entity/localCache/AppSettings";
 import {AppSettingsConstant} from "@common/constants/app/AppSettingsConstant";
 import {AppTray} from "@main/app/AppTray";
