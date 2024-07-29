@@ -1,15 +1,5 @@
 import "reflect-metadata";
-import {
-    DEFAULT_WIN_NAME,
-    INJECTABLE,
-    INJECT_NAME,
-    INJECT_TYPE,
-    IPC_HANDLE,
-    IPC_ON,
-    IPC_SEND,
-    IPC_WIN_NAME,
-    PARAMTYPES_METADATA, IPC_SEND_ALL
-} from './constants'
+import {DEFAULT_WIN_NAME, IPC_HANDLE, IPC_ON, IPC_SEND_ALL} from './constants'
 import {WindowManager} from "@main/framework/windowManager/WindowManager";
 import log from "electron-log";
 
@@ -111,16 +101,16 @@ export function Controller(): ClassDecorator {
 /**
  * Injectable decorator, help to inject service
  */
-export function Injectable(): ClassDecorator {
+/*export function Injectable(): ClassDecorator {
     return (target) => {
         Reflect.defineMetadata(INJECTABLE, INJECT_TYPE.CLASS, target)
     }
-}
+}*/
 
 /**
  * Inject decorator, help to inject custom injectable item
  */
-export function Inject(name: string): ParameterDecorator {
+/*export function Inject(name: string): ParameterDecorator {
     if (!name)
         throw new Error('inject name is required')
 
@@ -129,15 +119,15 @@ export function Inject(name: string): ParameterDecorator {
         Reflect.defineMetadata(INJECTABLE, INJECT_TYPE.CUSTOM, param)
         Reflect.defineMetadata(INJECT_NAME, name, param)
     }
-}
+}*/
 
 /**
  * Window decorator, help to inject window
  */
-export function Window(name = DEFAULT_WIN_NAME): ParameterDecorator {
+/*export function Window(name = DEFAULT_WIN_NAME): ParameterDecorator {
     return (target, _, index) => {
         const param = Reflect.getMetadata(PARAMTYPES_METADATA, target)[index]
         Reflect.defineMetadata(INJECTABLE, INJECT_TYPE.WINDOW, param)
         Reflect.defineMetadata(INJECT_NAME, name, param)
     }
-}
+}*/

@@ -12,11 +12,10 @@ import {
 } from "@main/framework/windowManager/constants";
 import {Singleton} from "@main/decorators/Singleton";
 import {v4 as uuidv4} from 'uuid';
-import {GlobalLogger} from "@main/framework/logger/GlobalLogger";
+import log from "electron-log";
 
 type Construct<T = any> = new (...args: Array<any>) => T
 export type ControllerClass = Construct
-export type InjectableClass = Construct
 
 export type OptionWindowType =
     WindowOpts[]
@@ -58,7 +57,7 @@ interface Options {
 export class WindowManager {
     private static windows: WindowOpts[] = [];
     private static existInjectableClass: Record<string, any> = {};
-    private static logger = new GlobalLogger('WindowManager');
+    private static logger = log.scope('WindowManager');
     private static options: Options
     private static registeredChannels: Set<string> = new Set(); // 记录已注册的管道名
 
@@ -215,87 +214,6 @@ export class WindowManager {
     }
 
     private static async initControllers() {
-        /*for (const ControllerClass of WindowManager.options.controllers) {
-            const controller = this.factory(ControllerClass)
-            const proto = ControllerClass.prototype
-            const funcs = Object.getOwnPropertyNames(proto).filter(
-                item => typeof controller[item] === 'function' && item !== 'constructor',
-            )
-
-            funcs.forEach((funcName) => {
-                if (Reflect.getMetadata(IPC_HANDLE, proto, funcName)) {
-                    const channel = Reflect.getMetadata(IPC_HANDLE, proto, funcName)
-                    if (!WindowManager.registeredChannels.has(channel)) {
-                        ipcMain.handle(channel, async (e, ...args) => {
-                            try {
-                                return await controller[funcName].apply(controller, [...args, e])
-                            } catch (error: any) {
-                                WindowManager.logger.error(error)
-                                WindowManager.logger.error(`With args: ${JSON.stringify(args)}`);
-                                throw new Error(error?.message ?? error)
-                            }
-                        })
-                        // 将通道标记为已注册
-                        WindowManager.registeredChannels.add(channel);
-                    }
-                } else if (Reflect.getMetadata(IPC_ON, proto, funcName)) {
-                    const channel = Reflect.getMetadata(IPC_ON, proto, funcName)
-                    if (!WindowManager.registeredChannels.has(channel)) {
-                        ipcMain.on(channel, async (e, ...args) => {
-                            try {
-                                await controller[funcName].apply(controller, [...args, e])
-                            } catch (error: any) {
-                                WindowManager.logger.error(error)
-                                throw new Error(error?.message ?? error)
-                            }
-                        })
-                        // 将通道标记为已注册
-                        WindowManager.registeredChannels.add(channel);
-                    }
-                } else if (Reflect.getMetadata(IPC_SEND, proto, funcName)) {
-                    const channel = Reflect.getMetadata(IPC_SEND, proto, funcName)
-                    if (!WindowManager.registeredChannels.has(channel)) {
-                        const winName = Reflect.getMetadata(IPC_WIN_NAME, proto, funcName)
-                        const winInfo = WindowManager.windows.find(item => item.name === winName)
-
-                        if (winInfo) {
-                            const {webContents} = winInfo.win
-                            const func = controller[funcName]
-
-                            controller[funcName] = async (...args: any[]) => {
-                                const result = await func.apply(controller, args)
-                                console.log(IPC_SEND, result)
-                                webContents.send(channel!, result)
-                                return result
-                            }
-                        } else {
-                            WindowManager.logger.warn(`${IPC_SEND}: Can not find window [${winName}] to send data through [${channel}]`)
-                        }
-
-                        // 将通道标记为已注册
-                        WindowManager.registeredChannels.add(channel);
-                    }
-                } else if (Reflect.getMetadata(IPC_SEND_ALL, proto, funcName)) {
-                    const channel = Reflect.getMetadata(IPC_SEND_ALL, proto, funcName)
-
-                    const originalFunc = controller[funcName].bind(controller);
-
-                    controller[funcName] = async (...args: any[]) => {
-                        const result = await originalFunc(...args);
-                        WindowManager.windows.forEach(winInfo => {
-                            if (winInfo && winInfo.win && !winInfo.win.isDestroyed()) {
-                                console.log(IPC_SEND_ALL, result)
-                                winInfo.win.webContents.send(channel, result);
-                            }
-                        });
-                        return result;
-                    };
-
-                    // 将通道标记为已注册
-                    WindowManager.registeredChannels.add(channel);
-                }
-            })
-        }*/
         for (const ControllerClass of WindowManager.options.controllers) {
             const controller = this.factory(ControllerClass);
             const proto = ControllerClass.prototype;
