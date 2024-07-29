@@ -2,7 +2,7 @@ import {app} from 'electron'
 import {AppController} from './controller/app/AppController'
 import {createMainWindow} from './window/mainWindow'
 import {WindowController} from "@main/controller/app/WindowController";
-import {WindowManager} from "@main/framework/WindowManager";
+import {WindowManager} from "@main/framework/windowManager/WindowManager";
 import {AppLog} from "@main/app/AppLog";
 import {AppConstant} from "@common/constants/app/AppConstant";
 import {LocalCacheSource} from "@main/dataSource/LocalCacheSource";
@@ -12,6 +12,7 @@ import {AppSettings} from "@main/entity/localCache/AppSettings";
 import {AppSettingsConstant} from "@common/constants/app/AppSettingsConstant";
 import {AppTray} from "@main/app/AppTray";
 import {AppNotificationController} from "@main/controller/app/AppNotificationController";
+import GlobalErrorHandler from "@main/framework/errorHandler/GlobalErrorHandler";
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 process.env.TZ = 'Asia/Shanghai'; // 设置环境变量为中国时区
@@ -70,6 +71,15 @@ async function electronAppInit() {
             })
         }
     }
+
+    // 全局未捕获异常处理
+    process.on('uncaughtException', (error) => {
+        GlobalErrorHandler.handleError(error);
+    });
+
+    process.on('unhandledRejection', (reason: any) => {
+        GlobalErrorHandler.handleError(reason);
+    });
 }
 
 async function bootstrap() {

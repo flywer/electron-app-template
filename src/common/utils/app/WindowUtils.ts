@@ -1,5 +1,5 @@
-import {WindowManager} from "@main/framework/WindowManager";
-import {DEFAULT_WIN_NAME} from "@main/framework/constants";
+import {WindowManager} from "@main/framework/windowManager/WindowManager";
+import {DEFAULT_WIN_NAME} from "@main/framework/windowManager/constants";
 import {app, BrowserWindow} from "electron";
 import {join} from "path";
 import {BASE_URL} from "@common/constants/app/BaseUrl";

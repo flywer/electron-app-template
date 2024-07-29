@@ -1,4 +1,4 @@
-import {Controller, IpcHandle, IpcSendPlus} from "@main/framework/decorators";
+import {Controller, IpcHandle, IpcSendPlus} from "@main/framework/windowManager/decorators";
 import {AppNotificationChannel} from "@common/channels/app/AppNotificationChannel";
 import {LocalCacheSource} from "@main/dataSource/LocalCacheSource";
 import {AppNotification} from "@main/entity/localCache/AppNotification";

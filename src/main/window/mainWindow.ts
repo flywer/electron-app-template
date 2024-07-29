@@ -1,7 +1,7 @@
 import {join} from 'path'
 import {BrowserWindow, app} from 'electron'
 import log from "electron-log";
-import {DEFAULT_WIN_NAME} from "@main/framework/constants";
+import {DEFAULT_WIN_NAME} from "@main/framework/windowManager/constants";
 import {BASE_URL} from "@common/constants/app/BaseUrl";
 import {RouteName} from "@common/constants/app/RouteName";
 

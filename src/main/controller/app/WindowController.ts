@@ -1,5 +1,5 @@
-import {WindowManager} from "@main/framework/WindowManager";
-import {Controller, IpcHandle} from "@main/framework/decorators";
+import {WindowManager} from "@main/framework/windowManager/WindowManager";
+import {Controller, IpcHandle} from "@main/framework/windowManager/decorators";
 import {WindowApiChannel} from "@common/channels/app/WindowApiChannel";
 import {BrowserWindow, webContents} from "electron";
 import {CreateWindowParams, WindowUtils} from "@common/utils/app/WindowUtils";

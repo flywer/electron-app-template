@@ -1,4 +1,4 @@
-import {Controller, IpcHandle} from "@main/framework/decorators"
+import {Controller, IpcHandle} from "@main/framework/windowManager/decorators"
 import {app, shell} from "electron";
 import {AppApiChannel} from "@common/channels/app/AppApiChannel";
 import {AppConstant} from "@common/constants/app/AppConstant";

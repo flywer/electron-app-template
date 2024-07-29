@@ -1,8 +1,8 @@
-import {Controller, IpcHandle, IpcSendAll} from "@main/framework/decorators";
+import {Controller, IpcHandle, IpcSendAll} from "@main/framework/windowManager/decorators";
 import {LocalCacheSource} from "@main/dataSource/LocalCacheSource";
 import {AppSettings} from "@main/entity/localCache/AppSettings";
 import {AppSettingsApiChannel} from "@common/channels/app/AppSettingsApiChannel";
-import {WindowManager} from "@main/framework/WindowManager";
+import {WindowManager} from "@main/framework/windowManager/WindowManager";
 import {createSettingWindow} from "@main/window/settingWindow";
 import {AppSettingsConstant} from "@common/constants/app/AppSettingsConstant";
 import {app} from "electron";
