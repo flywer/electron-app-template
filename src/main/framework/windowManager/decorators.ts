@@ -10,7 +10,7 @@ import {
     IPC_WIN_NAME,
     PARAMTYPES_METADATA, IPC_SEND_ALL
 } from './constants'
-import {WindowManager} from "@main/framework/WindowManager";
+import {WindowManager} from "@main/framework/windowManager/WindowManager";
 import log from "electron-log";
 
 /**

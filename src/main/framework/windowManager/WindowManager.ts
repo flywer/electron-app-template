@@ -1,14 +1,18 @@
 import {app, BrowserWindow, ipcMain} from "electron";
-import {createLogger} from "@main/framework/log";
 import {
     INJECT_NAME,
     INJECT_TYPE,
     INJECTABLE,
-    IPC_HANDLE, IPC_ON, IPC_SEND, IPC_SEND_ALL, IPC_WIN_NAME,
+    IPC_HANDLE,
+    IPC_ON,
+    IPC_SEND,
+    IPC_SEND_ALL,
+    IPC_WIN_NAME,
     PARAMTYPES_METADATA
-} from "@main/framework/constants";
+} from "@main/framework/windowManager/constants";
 import {Singleton} from "@main/decorators/Singleton";
 import {v4 as uuidv4} from 'uuid';
+import {GlobalLogger} from "@main/framework/logger/GlobalLogger";
 
 type Construct<T = any> = new (...args: Array<any>) => T
 export type ControllerClass = Construct
@@ -54,13 +58,12 @@ interface Options {
 export class WindowManager {
     private static windows: WindowOpts[] = [];
     private static existInjectableClass: Record<string, any> = {};
-    private static logger = createLogger();
+    private static logger = new GlobalLogger('WindowManager');
     private static options: Options
     private static registeredChannels: Set<string> = new Set(); // 记录已注册的管道名
 
     public static async init(options: Options) {
         WindowManager.options = options
-
         await this.addWindows(options.window)
     }
 
@@ -171,6 +174,10 @@ export class WindowManager {
         }
     }
 
+    private static removeWindow(windowOpts: WindowOpts): void {
+        WindowManager.windows = WindowManager.windows.filter(win => win.name !== windowOpts.name);
+    }
+
     private static factory<T>(constructClass: Construct<T>): T {
         const paramtypes: any[] = Reflect.getMetadata(PARAMTYPES_METADATA, constructClass)
         let providers: any[] = []
@@ -208,7 +215,7 @@ export class WindowManager {
     }
 
     private static async initControllers() {
-        for (const ControllerClass of WindowManager.options.controllers) {
+        /*for (const ControllerClass of WindowManager.options.controllers) {
             const controller = this.factory(ControllerClass)
             const proto = ControllerClass.prototype
             const funcs = Object.getOwnPropertyNames(proto).filter(
@@ -288,10 +295,111 @@ export class WindowManager {
                     WindowManager.registeredChannels.add(channel);
                 }
             })
+        }*/
+        for (const ControllerClass of WindowManager.options.controllers) {
+            const controller = this.factory(ControllerClass);
+            const proto = ControllerClass.prototype;
+            const funcs = Object.getOwnPropertyNames(proto).filter(
+                item => typeof controller[item] === 'function' && item !== 'constructor',
+            );
+
+            funcs.forEach((funcName) => {
+                const handleChannel = getMetadata(proto, funcName, IPC_HANDLE);
+                const onChannel = getMetadata(proto, funcName, IPC_ON);
+                const sendChannel = getMetadata(proto, funcName, IPC_SEND);
+                const sendAllChannel = getMetadata(proto, funcName, IPC_SEND_ALL);
+
+                if (handleChannel) {
+                    this.registerIpcHandle(handleChannel, controller, funcName);
+                } else if (onChannel) {
+                    this.registerIpcOn(onChannel, controller, funcName);
+                } else if (sendChannel) {
+                    this.registerIpcSend(sendChannel, controller, funcName, proto);
+                } else if (sendAllChannel) {
+                    this.registerIpcSendAll(sendAllChannel, controller, funcName);
+                }
+            });
         }
     }
 
-    private static removeWindow(windowOpts: WindowOpts): void {
-        WindowManager.windows = WindowManager.windows.filter(win => win.name !== windowOpts.name);
+    private static registerIpcHandle(channel: string, controller: any, funcName: string) {
+        if (!WindowManager.registeredChannels.has(channel)) {
+            ipcMain.handle(channel, async (e, ...args) => {
+                try {
+                    return await controller[funcName].apply(controller, [...args, e]);
+                } catch (error: any) {
+                    WindowManager.logger.error(error);
+                    WindowManager.logger.error(`With args: ${JSON.stringify(args)}`);
+                    throw new Error(error?.message ?? error);
+                }
+            });
+            WindowManager.registeredChannels.add(channel);
+        }
     }
+
+    private static registerIpcOn(channel: string, controller: any, funcName: string) {
+        if (!WindowManager.registeredChannels.has(channel)) {
+            ipcMain.on(channel, async (e, ...args) => {
+                try {
+                    await controller[funcName].apply(controller, [...args, e]);
+                } catch (error: any) {
+                    WindowManager.logger.error(error);
+                    throw new Error(error?.message ?? error);
+                }
+            });
+            WindowManager.registeredChannels.add(channel);
+        }
+    }
+
+    private static registerIpcSend(channel: string, controller: any, funcName: string, proto: any) {
+        if (!WindowManager.registeredChannels.has(channel)) {
+            const winName = getMetadata(proto, funcName, IPC_WIN_NAME);
+            const winInfo = WindowManager.windows.find(item => item.name === winName);
+
+            if (winInfo) {
+                const {webContents} = winInfo.win;
+                const func = controller[funcName];
+
+                controller[funcName] = async (...args: any[]) => {
+                    const result = await func.apply(controller, args);
+                    webContents.send(channel, result);
+                    return result;
+                };
+            } else {
+                WindowManager.logger.warn(`${IPC_SEND}: Can not find window [${winName}] to send data through [${channel}]`);
+            }
+
+            WindowManager.registeredChannels.add(channel);
+        }
+    }
+
+    private static registerIpcSendAll(channel: string, controller: any, funcName: string) {
+        if (!WindowManager.registeredChannels.has(channel)) {
+            const originalFunc = controller[funcName].bind(controller);
+
+            controller[funcName] = async (...args: any[]) => {
+                const result = await originalFunc(...args);
+                WindowManager.windows.forEach(winInfo => {
+                    if (winInfo && winInfo.win && !winInfo.win.isDestroyed()) {
+                        winInfo.win.webContents.send(channel, result);
+                    }
+                });
+                return result;
+            };
+
+            WindowManager.registeredChannels.add(channel);
+        }
+    }
+
+
+}
+
+/**
+ *  获取元数据
+ *  @param target 目标对象
+ *  @param propertyKey 属性名
+ *  @param metadataKey 元数据键，也就是装饰器的名字
+ **/
+function getMetadata(target: any, propertyKey: string, metadataKey: string): string | undefined {
+    return Reflect.getMetadata(metadataKey, target, propertyKey);
 }
