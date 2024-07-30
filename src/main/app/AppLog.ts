@@ -25,10 +25,9 @@ export class AppLog {
             // 设置日志级别
             log.transports.file.level = global.logLevel;
 
-            // 将控制台输出更改为仅在钩子中创建的文本。
             log.transports.console.format = '{text}';
 
-            // 将控制台输出更改为仅在钩子中创建的文本
+            // 将控制台输出文本格式化
             log.hooks.push((message, transport) => {
                 let text = null;
 
@@ -64,10 +63,17 @@ export class AppLog {
                 return newMessage;
             });
 
+            // 捕获未处理的异常
+            log.errorHandler.startCatching({showDialog: false});
+
+            // 记录Electron事件日志
+            log.eventLogger.startLogging();
+
             log.initialize({preload: true});
 
             // 覆写console
             Object.assign(console, log.functions);
+            log.scope('logger').info('日志模块初始化成功')
         } catch (e) {
             log.error("日志模块初始化异常", e)
         }

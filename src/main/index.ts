@@ -12,7 +12,6 @@ import {AppSettings} from "@main/entity/localCache/AppSettings";
 import {AppSettingsConstant} from "@common/constants/app/AppSettingsConstant";
 import {AppTray} from "@main/app/AppTray";
 import {AppNotificationController} from "@main/controller/app/AppNotificationController";
-import GlobalErrorHandler from "@main/framework/errorHandler/GlobalErrorHandler";
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 process.env.TZ = 'Asia/Shanghai'; // 设置环境变量为中国时区
@@ -42,12 +41,6 @@ async function electronAppInit() {
 
     }).catch(error => log.error('本地缓存库连接失败', error))
 
-    /*
-        ALiYunSource.initialize().then(async () => {
-            log.info("远程库连接初始化成功")
-        }).catch(error => log.error('远程库连接失败', error))
-    */
-
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin')
             app.exit()
@@ -71,15 +64,6 @@ async function electronAppInit() {
             })
         }
     }
-
-    // 全局未捕获异常处理
-    process.on('uncaughtException', (error) => {
-        GlobalErrorHandler.handleError(error);
-    });
-
-    process.on('unhandledRejection', (reason: any) => {
-        GlobalErrorHandler.handleError(reason);
-    });
 }
 
 async function bootstrap() {
